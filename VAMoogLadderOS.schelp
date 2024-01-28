@@ -1,0 +1,68 @@
+TITLE:: VAMoogLadderOS
+summary:: Moog Ladder
+categories:: Undocumented classes, UGens>Undocumented
+related:: Classes/LPF, Classes/RLPF, etc.
+
+DESCRIPTION::
+TL;DR - a great sounding Moog Ladder emulation filterof Zavalishin 2012 LINK::https://www.native-instruments.com/fileadmin/ni_media/downloads/pdf/VAFilterDesign_2.1.2.pdf (VAFilter Design). ::
+
+An Oversampled Moog Ladder filter based on the faust implementation by Dario Sanfilippo, which is based on Lorenzo Della Cioppa's correction to Pirkle's implementation of the VAFilter Design schematic.
+
+
+CLASSMETHODS::
+
+METHOD:: ar
+audio in/audio out
+
+ARGUMENT:: sig
+the input signal
+
+ARGUMENT:: freq
+the cutoff frequency. the value is clipped internally at (0.6 * the internal nyquist frequency). Meaning, with no oversampling, the top frequency of the filter is ~13K. never fear, with oversampling the top frequency of the filter increases by powers of 2, so with an oversampling index of 1, the cutoff frequency is above nyquist.
+
+ARGUMENT:: q_val
+a value generally between 0 and 1. above 1 and the filter will self-resonate. an internal limiter on feedback stops the filter from blowing up.
+
+ARGUMENT:: oversample
+OverSampling Index
+
+0 = none, 1 = 2x, 2 = 4x, 3 = 8x, 4 = 16x
+
+higher oversampling seems to result in better resonance. it also allows higher cutoff frequencies. cutoff frequency is clipped internally at (0.6 * the internal nyquist frequency). Meaning, with no oversampling, the top frequency of the filter at sr=44100 is ~13K. never fear, with oversampling the top frequency of the filter increases by powers of 2, so with an oversampling index of 1, the cutoff frequency is above nyquist.
+
+ARGUMENT:: mul
+mul
+
+ARGUMENT:: add
+add
+
+EXAMPLES::
+
+code::
+
+//sweeps like a champ
+(
+    {
+      VAMoogLadderOS.ar(WhiteNoise.ar([1,1]), MouseX.kr(100,20000, \exponential).poll, MouseY.kr(0,1.1),4)*0.2
+    }.scope;
+)
+
+(
+    {
+      var freq = 40;
+      var sig = Splay.ar(Saw.ar([freq, freq + 1]) + HPF.ar(PinkNoise.ar(0.2!2), freq), 0.4, 0) + Pan2.ar(Pulse.ar(freq / 2, 0.5, 0.4), LFTri.ar(0.02));
+      VAMoogLadderOS.ar(LFSaw.ar([40,40]), MouseX.kr(40,20000, \exponential).poll, MouseY.kr(0,0.95),4)*0.2
+    }.scope;
+)
+
+//impulses can give the filter a gentle ping
+//the higher the internal sample rate the better the ping
+(
+    {
+      //will complain about denormal values without a touch of noise in the signal (checks for denormals internally, so i don't know why this would be the case)
+      var trig = Dust.ar(5!10);
+      Splay.ar(VAMoogLadderOS.ar(trig+WhiteNoise.ar(0.001), TExpRand.ar(1500,15000, trig), 1.02,4))*0.5
+    }.scope
+)
+
+::
