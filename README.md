@@ -1,10 +1,9 @@
-OversamplingOscillators (and BandLimited as well)
+VAMoogFilterOS
 Sam Pluta
 
-Oversampling Oscillators use the VariableOversampling class from Jatin Chowdhury's ChowDSP library. That source is included with the download. Bandlimited oscillators are based on Julius Smith's SawN, etc from "Alias-Suppressed Oscillators based on Differentiated Polynomial Waveforms", Vesa Valimaki, Juhan Nam, Julius Smith, and Jonathan Abel.
+TL;DR - a great sounding Moog Ladder emulation filter of  [Zavalishin VA Filter Design](https://www.native-instruments.com/fileadmin/ni_media/downloads/pdf/VAFilterDesign_2.1.2.pdf).
 
-These are luxurious oscillators that sound great, and have some inefficient code used to achieve these great sounds. They are not designed to be super efficient, so if you want that, use the standard SC oscillators.
-
+An Oversampled Moog Ladder filter based on the faust implementation by Dario Sanfilippo, which is based on Lorenzo Della Cioppa's correction to Pirkle's implementation of the VAFilter Design schematic.
 
 run the following from this directory to build from source using cmake
 
@@ -15,7 +14,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Release -DSC_PATH=<PATH TO SC SOURCE>
 cmake --build . --config Release
 ```
 
-It should build SawBL, SquareBL, TriBL, ImpulseBL, SinOscOS, TriOS, SawOS, SquareOS, VarSawOS, PMOscOS, PM7OS, FM7OS. The OS plugins are Oversampled. The BL plugins are polynomial bandlimited.
+It should build VAMoodLadderOS
 
-After building ake sure this directory or all of the scx, sc, and schelp files are in the SC path, recompile the SC libary, and they should work. #OversamplingOscillators
+After building ake sure this directory or all of the scx, sc, and schelp files are in the SC path, recompile the SC libary, and they should work. 
 # VAMoogFilterOS
