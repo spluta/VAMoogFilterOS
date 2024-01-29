@@ -1,4 +1,4 @@
-VAMoogFilterOS
+# VAMoogFilterOS
 Sam Pluta
 
 TL;DR - a great sounding Moog Ladder emulation filter of  [Zavalishin VA Filter Design](https://www.native-instruments.com/fileadmin/ni_media/downloads/pdf/VAFilterDesign_2.1.2.pdf).
@@ -16,5 +16,5 @@ cmake --build . --config Release
 
 It should build VAMoodLadderOS
 
-After building ake sure this directory or all of the scx, sc, and schelp files are in the SC path, recompile the SC libary, and they should work. 
-# VAMoogFilterOS
+After building ake sure this directory the scx, sc, and schelp files are in the SC path, recompile the SC libary, and they should work. 
+
